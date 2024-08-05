@@ -19,7 +19,6 @@ return new class extends Migration {
             $table->string('title')->nullable();
             $table->longText('description')->nullable();
             $table->string('status')->index()->default(TaskStatusEnum::TODO->value);
-            $table->morphs('modelable');
             $table->foreignId('assignee_user_id')->nullable()->constrained('users');
             $table->foreignId('reporter_user_id')->nullable()->constrained('users');
             $table->dateTime('expires_at')->nullable();

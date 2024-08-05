@@ -1,0 +1,30 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  IMAGE_NAME: $CI_REGISTRY_IMAGE
+  IMAGE_TAG: $CI_COMMIT_REF_NAME-$CI_PIPELINE_ID
+
+docker-build-tag:
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token $CI_REGISTRY --password-stdin
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  script:
+    - docker build -f docker/prod/Dockerfile  -t $IMAGE_NAME/web:$IMAGE_TAG .
+    - docker tag $IMAGE_NAME/web:$IMAGE_TAG $IMAGE_NAME/web:latest
+    - docker push $IMAGE_NAME/web:$IMAGE_TAG
+    - docker push $IMAGE_NAME/web:latest
+#deploy-prod:
+#  stage: deploy
+#  image: alpine
+#  script:
+#    - apk add --update curl
+#    - curl -X POST http://xxxxx?tag=$IMAGE_TAG
+#  rules:
+#    - if: $CI_COMMIT_BRANCH == "main"
