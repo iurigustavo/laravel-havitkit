@@ -1,0 +1,15 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Auth\Access\Response;
+use {{ namespacedModel }};
+use {{ namespacedUserModel }};
+
+class {{ class }} extends AbstractBasePolicy
+{
+    public function getModel(): string
+    {
+       return {{ model }}::class;
+    }
+}

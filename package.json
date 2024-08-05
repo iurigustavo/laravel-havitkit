@@ -1,0 +1,21 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.19",
+        "axios": "^1.6.4",
+        "daisyui": "^4.12.10",
+        "laravel-vite-plugin": "^1.0",
+        "postcss": "^8.4.39",
+        "tailwindcss": "^3.4.4",
+        "vite": "^5.0"
+    },
+    "dependencies": {
+        "flatpickr": "^4.6.13",
+        "tom-select": "^2.3.1"
+    }
+}
