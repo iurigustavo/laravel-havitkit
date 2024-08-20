@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Auth;
 
+use Livewire\Attributes\Validate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
@@ -14,11 +15,13 @@ class Login extends Component
 {
     use Toast;
 
-    #[Rule('required|email')]
-    public string $email    = '';
-    #[Rule('required|string')]
-    public string $password = '';
-    public bool   $remember = false;
+    #[Validate('required|email')]
+    public string $email = 'admin@admin.com';
+
+    #[Validate('required|string')]
+    public string $password = '123456';
+
+    public bool $remember = false;
 
     public function login(Request $request)
     {
@@ -28,10 +31,10 @@ class Login extends Component
             return redirect('/');
         }
 
-        if (!Auth::attempt($this->validate(), $this->remember)) {
+        if (! Auth::attempt($this->validate(), $this->remember)) {
             $this->addError('email', __('auth.failed'));
 
-            return;
+            return null;
         }
 
         $request->session()->regenerate();
@@ -43,6 +46,4 @@ class Login extends Component
     {
         return view('livewire.auth.login');
     }
-
-
 }

@@ -14,13 +14,15 @@ use App\Models\Role;
 
 class Edit extends Component
 {
-    use Toast, WithFileUploads;
-
+    use Toast;
+    use WithFileUploads;
     public User       $user;
+
     public UserForm   $form;
+
     public Collection $rolesList;
 
-    public function mount()
+    public function mount(): void
     {
         $this->form->fill($this->user);
         $this->form->roles  = $this->user->roles()->pluck('id')->toArray();
@@ -34,7 +36,7 @@ class Edit extends Component
         try {
             $action->handle($this->user, $this->form);
             $this->success(__('form.updated'), redirectTo: route('management.users.index'));
-        } catch (Exception $e) {
+        } catch (Exception) {
             $this->error(__('form.error.update'), redirectTo: route('management.users.index'));
         }
     }

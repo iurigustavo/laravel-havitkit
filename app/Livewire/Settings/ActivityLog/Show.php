@@ -14,11 +14,12 @@ class Show extends Component
     public bool $show = false;
 
     public ?string $new = '{}';
+
     public ?string $old = '{}';
 
     public function boot(): void
     {
-        if (!$this->activity) {
+        if (!$this->activity instanceof Activity) {
             $this->show = false;
 
             return;

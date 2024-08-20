@@ -1,50 +1,43 @@
 <?php
 
-
 return [
     'main' => [
         [
-            'title'       => 'Dashboard',
+            'title' => 'Dashboard',
             'description' => 'Go to dashboard',
-            'icon'        => 'o-chart-pie',
-            'link'        => '/',
-        ],
-        [
-            'title'       => 'Tasks',
-            'icon'        => 'o-tag',
-            'description' => 'Manage tasks',
-            'link'        => '/tasks',
+            'icon' => 'o-chart-pie',
+            'link' => '/',
         ],
         [
             'type' => 'separator',
         ],
         [
             'title' => 'Settings',
-            'icon'  => 'o-wrench-screwdriver',
-            'sub'   => [
+            'icon' => 'o-wrench-screwdriver',
+            'sub' => [
                 [
-                    'title'       => 'Users',
-                    'link'        => '/management/users',
+                    'title' => 'Users',
+                    'link' => '/management/users',
                     'description' => 'Manage users',
-                    'permission'  => 'viewAny Task',
+                    'permission' => 'viewAny Task',
                 ],
                 [
-                    'title'       => 'Roles',
-                    'link'        => '/management/roles',
+                    'title' => 'Roles',
+                    'link' => '/management/roles',
                     'description' => 'Manage Roles',
-                    'permission'  => 'management',
+                    'permission' => 'management',
                 ],
                 [
-                    'title'       => 'Permissions',
-                    'link'        => '/management/permissions',
+                    'title' => 'Permissions',
+                    'link' => '/management/permissions',
                     'description' => 'Manage Permissions',
-                    'permission'  => 'management',
+                    'permission' => 'management',
                 ],
                 [
-                    'title'       => 'Activity Log',
-                    'link'        => '/management/activity-log',
+                    'title' => 'Activity Log',
+                    'link' => '/management/activity-log',
                     'description' => 'Show activity logs events',
-                    'permission'  => 'management',
+                    'permission' => 'management',
                 ],
             ],
         ],

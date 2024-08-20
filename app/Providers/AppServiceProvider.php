@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
@@ -23,15 +24,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if ($this->app->environment('production')) {
-            \URL::forceScheme('https');
+            URL::forceScheme('https');
         }
 
-        Gate::before(function ($user, $ability) {
-            return $user->hasRole('admin') ? true : null;
-        });
+        Gate::before(fn($user, $ability): ?true => $user->hasRole('admin') ? true : null);
 
-        Builder::macro('pluckWithIdName', function ($idColumn = null, $nameColumn = null): Collection {
-            return $this->pluck($idColumn, $nameColumn)->mapWithKeys(fn($id, $value) => [$id => ['id' => $id, 'name' => $value]]);
-        });
+        Builder::macro('pluckWithIdName', fn($idColumn = null, $nameColumn = null): Collection => $this->pluck($nameColumn, $idColumn)->map(fn ($value, $id): array => ['id' => $id, 'name' => $value])->values());
     }
 }

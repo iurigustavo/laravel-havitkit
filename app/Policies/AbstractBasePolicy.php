@@ -2,12 +2,13 @@
 
 namespace App\Policies;
 
+use Illuminate\Auth\Access\HandlesAuthorization;
 use App\Models\User;
 use Illuminate\Support\Str;
 
 abstract class AbstractBasePolicy
 {
-    use \Illuminate\Auth\Access\HandlesAuthorization;
+    use HandlesAuthorization;
 
     /**
      * Determine whether the user can view any models.

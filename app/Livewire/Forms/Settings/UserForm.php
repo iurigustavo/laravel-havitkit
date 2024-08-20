@@ -8,15 +8,20 @@ use Livewire\Form;
 class UserForm extends Form
 {
     public $name  = '';
+
     public $email = '';
 
     /**
      * @var TemporaryUploadedFile
      */
     public         $avatar_file;
+
     public bool    $active                = true;
+
     public ?string $password              = '';
+
     public ?string $password_confirmation = '';
+
     public array   $roles                 = [];
 
     public function rules(): array

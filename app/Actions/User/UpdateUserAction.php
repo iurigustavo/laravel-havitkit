@@ -22,7 +22,7 @@ class UpdateUserAction
             $user->avatar = $data->avatar_file->storePublicly('users', 's3');
         }
 
-        if (!empty($data->password)) {
+        if ($data->password !== null && $data->password !== '' && $data->password !== '0') {
             $user->password = bcrypt($data->password);
         }
 

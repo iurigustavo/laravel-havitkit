@@ -13,9 +13,10 @@ class Edit extends Component
     use Toast;
 
     public Permission     $permission;
+
     public PermissionForm $form;
 
-    public function mount()
+    public function mount(): void
     {
         $this->form->fill($this->permission);
     }
@@ -25,7 +26,7 @@ class Edit extends Component
         try {
             $this->permission->update($this->form->validate());
             $this->success(__('form.updated'), redirectTo: route('management.permissions.index'));
-        } catch (Exception $e) {
+        } catch (Exception) {
             $this->error(__('form.error.update'), redirectTo: route('management.permissions.index'));
         }
     }

@@ -12,10 +12,12 @@ use Mary\Traits\Toast;
 
 class MyProfile extends Component
 {
-    use Toast, WithFileUploads;
-
+    use Toast;
+    use WithFileUploads;
     public UserForm $form;
+
     public User     $user;
+
     public string   $selectedTab = 'user-tab';
 
 

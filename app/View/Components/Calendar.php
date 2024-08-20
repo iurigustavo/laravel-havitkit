@@ -39,15 +39,13 @@ class Calendar extends Component
                 'selection' => [
                     'day' => false,
                 ],
-                'iso8601' => !$this->sundayStart,
+                'iso8601' => $this->sundayStart !== true,
             ],
             'CSSClasses' => 'y',
             'actions' => 'x',
         ], $this->config));
 
-        $config = $this->addCss($config);
-
-        return $config;
+        return $this->addCss($config);
     }
 
     // Extra CSS for responsive layout
@@ -73,14 +71,12 @@ class Calendar extends Component
                 $dates = [Carbon::parse($event['date'])->format('Y-m-d')];
             }
 
-            return collect($dates)->flatMap(function ($date) use ($event) {
-                return [
-                    $date => [
-                        'modifier' => $event['css'],
-                        'html' => '<div><strong>' . $event['label'] . '</strong></div><div>' . ($event['description'] ?? null) . '</div>',
-                    ],
-                ];
-            });
+            return collect($dates)->flatMap(fn($date) => [
+                $date => [
+                    'modifier' => $event['css'],
+                    'html' => '<div><strong>' . $event['label'] . '</strong></div><div>' . ($event['description'] ?? null) . '</div>',
+                ],
+            ]);
         });
     }
 

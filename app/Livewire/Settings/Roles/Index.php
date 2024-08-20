@@ -33,7 +33,7 @@ class Index extends Component
     public function roles(): LengthAwarePaginator
     {
         return Role::query()->withCount(['permissions'])
-            ->when($this->name, fn(Builder $q) => $q->where('name', 'like', "%$this->name%"))
+            ->when($this->name, fn(Builder $q) => $q->where('name', 'like', sprintf('%%%s%%', $this->name)))
             ->orderBy(...array_values($this->sortBy))
             ->paginate(10);
     }
@@ -49,7 +49,7 @@ class Index extends Component
         ];
     }
 
-    public function delete(Role $role, DeleteRoleAction $action)
+    public function delete(Role $role, DeleteRoleAction $action): void
     {
         $action->handle($role);
         $this->success(__('form.deleted'));

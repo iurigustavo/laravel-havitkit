@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Settings\Roles;
 
+use Illuminate\Support\Str;
 use App\Actions\Roles\UpdateRoleAction;
 use App\Livewire\Forms\Settings\RoleForm;
 use Exception;
@@ -9,18 +10,20 @@ use Livewire\Component;
 use Mary\Traits\Toast;
 use App\Models\Permission;
 use App\Models\Role;
-use Str;
 
 class Edit extends Component
 {
     use Toast;
 
     public Role     $role;
+
     public RoleForm $form;
+
     public array    $allOptions = [];
+
     public array    $permissionsList;
 
-    public function mount()
+    public function mount(): void
     {
         $this->form->fill($this->role);
         $this->form->permissions = $this->role->permissions()->pluck('name')->toArray();
@@ -70,13 +73,9 @@ class Edit extends Component
         return $table;
     }
 
-    public function toggleAll()
+    public function toggleAll(): void
     {
-        if (count($this->form->permissions) === count($this->allOptions)) {
-            $this->form->permissions = [];
-        } else {
-            $this->form->permissions = $this->allOptions;
-        }
+        $this->form->permissions = count($this->form->permissions) === count($this->allOptions) ? [] : $this->allOptions;
     }
 
     public function save(UpdateRoleAction $action): void
@@ -85,7 +84,7 @@ class Edit extends Component
         try {
             $action->handle($this->role, $this->form);
             $this->success(__('form.updated'), redirectTo: route('management.roles.index'));
-        } catch (Exception $e) {
+        } catch (Exception) {
             $this->error(__('form.error.update'), redirectTo: route('management.roles.index'));
         }
     }

@@ -13,8 +13,9 @@ use Mary\Traits\Toast;
 
 class Index extends Component
 {
-    use Toast, WithPagination, ResetsPaginationWhenPropsChanges;
-
+    use Toast;
+    use WithPagination;
+    use ResetsPaginationWhenPropsChanges;
     #[Url]
     public string $name = '';
 
@@ -37,7 +38,7 @@ class Index extends Component
     public function permissions(): LengthAwarePaginator
     {
         return Permission::query()
-            ->when($this->name, fn(Builder $q) => $q->where('name', 'like', "%$this->name%"))
+            ->when($this->name, fn(Builder $q) => $q->where('name', 'like', sprintf('%%%s%%', $this->name)))
             ->orderBy(...array_values($this->sortBy))
             ->paginate($this->perPage);
     }
@@ -51,7 +52,7 @@ class Index extends Component
         ];
     }
 
-    public function delete(Permission $permission)
+    public function delete(Permission $permission): void
     {
         $permission->delete();
         $this->success(__('form.deleted'));

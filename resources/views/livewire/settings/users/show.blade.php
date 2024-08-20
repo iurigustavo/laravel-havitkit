@@ -11,7 +11,7 @@
             <x-input label="Password" type="password" wire:model="form.password"/>
             <x-input label="Confirm password" type="password" wire:model="form.password_confirmation"/>
             <x-select label="Status" wire:model="form.active" :options="[['id' => 1,'name' => 'Active',],['id' => 0,'name' => 'Disabled',]]"/>
-            <x-choices label="Roles" wire:model="form.roles" :options="$rolesList" option-label="description"  />
+            <x-choices-offline label="Roles" wire:model="form.roles" :options="$rolesList" option-label="description" single/>
             <x-slot:actions>
                 <x-button.back link="{{ route('management.users.index') }}"/>
                 <x-button.submit/>

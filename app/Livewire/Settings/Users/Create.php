@@ -12,9 +12,10 @@ use App\Models\Role;
 
 class Create extends Component
 {
-    use Toast, WithFileUploads;
-
+    use Toast;
+    use WithFileUploads;
     public UserForm   $form;
+
     public Collection $rolesList;
 
     public function mount(): void

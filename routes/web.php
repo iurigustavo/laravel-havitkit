@@ -5,7 +5,6 @@ use App\Livewire\MyProfile;
 use App\Livewire\Settings\Roles\Create;
 use App\Livewire\Settings\Roles\Edit;
 use App\Livewire\Settings\Roles\Index;
-use App\Livewire\Task\ListTasks;
 use App\Livewire\Welcome;
 use Illuminate\Support\Facades\Route;
 
@@ -33,9 +32,6 @@ Route::middleware('auth')->group(function () {
     Route::get('my-profile', MyProfile::class)->name('my-profile');
     Route::impersonate();
 
-    Route::prefix('tasks')->name('tasks.')->group(function () {
-        Route::get('/', ListTasks::class)->name('index');
-    });
     Route::prefix('management')->name('management.')->group(function () {
         Route::prefix('users')->name('users.')->group(function () {
             Route::get('/', \App\Livewire\Settings\Users\Index::class)->name('index');

@@ -30,10 +30,12 @@
         <div class="grid gap-5" @keydown.enter="$wire.showFilters = false">
             <x-choices-offline
                     label="User"
+                    option-avatar="avatar_url"
                     wire:model.live="causer_id"
                     :options="$users"
-                    single
-                    searchable/>
+                    multiple
+                    searchable>
+            </x-choices-offline>
 
             <x-input label="Subject Id" wire:model.live.debounce="subject_id" inline/>
             <x-select label="Subject" :options="$subjects" wire:model.live="subject_type" placeholder="All" placeholder-value="0" inline/>

@@ -35,9 +35,7 @@ final class UserTable extends Tableable
                         ->add('avatar', fn($user) => Blade::renderComponent((new Avatar($user->avatar_url))->withAttributes(['class' => '!w-10'])))
                         ->add('name')
                         ->add('email')
-                        ->add('roles', fn($user) => $user->roles->map(function ($role) {
-                            return Blade::renderComponent((new Badge($role->description))->withAttributes(['class' => 'badge-primary']));
-                        })->implode(' '))
+                        ->add('roles', fn($user) => $user->roles->map(fn($role) => Blade::renderComponent((new Badge($role->description))->withAttributes(['class' => 'badge-primary'])))->implode(' '))
                         ->add('is_active', fn($user): string => $user->active ? __('Yes') : __('No'));
     }
 
@@ -65,11 +63,9 @@ final class UserTable extends Tableable
                   ->dataSource(Role::all())
                   ->optionValue('id')
                   ->optionLabel('description')
-                  ->builder(function (Builder $query, array $value) {
-                      return $query->whereHas('roles', function (Builder $query) use ($value) {
-                          $query->whereIn('role_id', $value);
-                      });
-                  }),
+                  ->builder(fn(Builder $query, array $value) => $query->whereHas('roles', function (Builder $query) use ($value): void {
+                      $query->whereIn('role_id', $value);
+                  })),
         ];
     }
 
@@ -88,7 +84,7 @@ final class UserTable extends Tableable
         ];
     }
 
-    public function delete(User $user, DeleteUserAction $action)
+    public function delete(User $user, DeleteUserAction $action): void
     {
         $action->handle($user);
         $this->success(__('form.deleted'));
@@ -98,13 +94,11 @@ final class UserTable extends Tableable
     {
         return [
             Button::make('show')->bladeComponent('button.view', ['link' => route('management.users.show', $row)]),
-            Button::add('delete')->id()->render(function ($row) {
-                return Blade::render(
-                    <<<HTML
+            Button::add('delete')->id()->render(fn($row) => Blade::render(
+                <<<HTML
 <x-button.delete wire:click="delete('$row->id')" />
 HTML
-                );
-            }),
+            )),
             Button::add('impersonate')->bladeComponent(
                 'button',
                 [
@@ -117,10 +111,10 @@ HTML
         ];
     }
 
-    public function actionRules($row): array
+    public function actionRules(): array
     {
         return [
-            Rule::rows()->when(fn($user) => $user->active === false)->setAttribute('class', '!text-red-500'),
+            Rule::rows()->when(fn($user): bool => $user->active === false)->setAttribute('class', '!text-red-500'),
         ];
     }
 

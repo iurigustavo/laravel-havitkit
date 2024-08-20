@@ -29,8 +29,8 @@ class Button extends Component
         public ?string $tooltipBottom = null,
     ) {
         $this->uuid = "mary" . md5(serialize($this));
-        $this->tooltip = $this->tooltip ?? $this->tooltipLeft ?? $this->tooltipRight ?? $this->tooltipBottom;
-        $this->tooltipPosition = $this->tooltipLeft ? 'lg:tooltip-left' : ($this->tooltipRight ? 'lg:tooltip-right' : ($this->tooltipBottom ? 'lg:tooltip-bottom' : 'lg:tooltip-top'));
+        $this->tooltip ??= $this->tooltipLeft ?? $this->tooltipRight ?? $this->tooltipBottom;
+        $this->tooltipPosition = $this->tooltipLeft !== null && $this->tooltipLeft !== '' && $this->tooltipLeft !== '0' ? 'lg:tooltip-left' : ($this->tooltipRight !== null && $this->tooltipRight !== '' && $this->tooltipRight !== '0' ? 'lg:tooltip-right' : ($this->tooltipBottom !== null && $this->tooltipBottom !== '' && $this->tooltipBottom !== '0' ? 'lg:tooltip-bottom' : 'lg:tooltip-top'));
     }
 
     public function spinnerTarget(): ?string

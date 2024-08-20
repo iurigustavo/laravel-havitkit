@@ -16,8 +16,9 @@ use Spatie\Activitylog\Models\Activity;
 
 class Index extends Component
 {
-    use WithPagination, ResetsPaginationWhenPropsChanges, ClearsProperties;
-
+    use ClearsProperties;
+    use ResetsPaginationWhenPropsChanges;
+    use WithPagination;
     #[Url]
     public array $sortBy = ['column' => 'id', 'direction' => 'desc'];
 
@@ -33,13 +34,13 @@ class Index extends Component
     public ?string $subject_id = '';
 
     #[Url]
-    public ?int $causer_id = 0;
+    public array $causer_id = [];
 
     #[Url]
     public int $perPage = 10;
 
     // Selected Brand to edit on modal
-    public ?Activity $activity;
+    public ?Activity $activity = null;
 
     #[On('activity-cancel')]
     public function clear(): void
@@ -50,11 +51,11 @@ class Index extends Component
     public function render()
     {
         return view('livewire.settings.activity-log.index', [
-            'headers'     => $this->headers(),
-            'activities'  => $this->activities(),
-            'users'       => $this->users(),
-            'subjects'    => $this->subjects(),
-            'events'      => $this->events(),
+            'headers'    => $this->headers(),
+            'activities' => $this->activities(),
+            'users'      => $this->users(),
+            'subjects'   => $this->subjects(),
+            'events'     => $this->events(),
             'filterCount' => $this->filterCount(),
         ]);
     }
@@ -78,14 +79,14 @@ class Index extends Component
             ->when($this->subject_type, fn(Builder $q) => $q->where('subject_type', $this->subject_type))
             ->when($this->subject_id, fn(Builder $q) => $q->where('subject_id', $this->subject_id))
             ->when($this->event, fn(Builder $q) => $q->where('event', $this->event))
-            ->when($this->causer_id, fn(Builder $q) => $q->where('causer_id', $this->causer_id))
+            ->when($this->causer_id, fn(Builder $q) => $q->whereIn('causer_id', $this->causer_id))
             ->orderBy(...array_values($this->sortBy))
             ->paginate($this->perPage);
     }
 
     public function users(): Collection
     {
-        return User::orderBy('name')->get();
+        return User::query()->orderBy('name')->get();
     }
 
     public function subjects(): Collection
@@ -100,7 +101,7 @@ class Index extends Component
 
     public function filterCount(): int
     {
-        return ($this->subject_id ? 1 : 0) + ($this->causer_id ? 1 : 0) + (strlen($this->event) ? 1 : 0) + (strlen($this->subject_type) ? 1 : 0);
+        return ($this->subject_id !== null && $this->subject_id !== '' && $this->subject_id !== '0' ? 1 : 0) + ($this->causer_id !== [] ? 1 : 0) + (strlen((string) $this->event) !== 0 ? 1 : 0) + (strlen((string) $this->subject_type) !== 0 ? 1 : 0);
     }
 
     public function show(Activity $activity): void
