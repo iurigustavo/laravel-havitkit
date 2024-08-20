@@ -713,6 +713,21 @@ postcss@^8.0.0, postcss@^8.1.0, postcss@^8.2.14, postcss@^8.4.21, postcss@^8.4.2
     picocolors "^1.0.1"
     source-map-js "^1.2.0"
 
+prettier-plugin-blade@^2.1.19:
+  version "2.1.19"
+  resolved "https://registry.npmjs.org/prettier-plugin-blade/-/prettier-plugin-blade-2.1.19.tgz"
+  integrity sha512-bLOrrZmWYZe9IN0EkMUESgOLExCKGJYOgUr+ZOxaOujUK0rirxTPiUYI4wnDZZfX2sI9MHaHCeKTlRnNmiRhAQ==
+
+prettier-plugin-tailwindcss@^0.6.6:
+  version "0.6.6"
+  resolved "https://registry.npmjs.org/prettier-plugin-tailwindcss/-/prettier-plugin-tailwindcss-0.6.6.tgz"
+  integrity sha512-OPva5S7WAsPLEsOuOWXATi13QrCKACCiIonFgIR6V4lYv4QLp++UXVhZSzRbZxXGimkQtQT86CC6fQqTOybGng==
+
+prettier@^3.0, prettier@^3.3.3, prettier@>=3:
+  version "3.3.3"
+  resolved "https://registry.npmjs.org/prettier/-/prettier-3.3.3.tgz"
+  integrity sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==
+
 proxy-from-env@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/proxy-from-env/-/proxy-from-env-1.1.0.tgz"
