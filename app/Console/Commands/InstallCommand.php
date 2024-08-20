@@ -27,6 +27,5 @@ class InstallCommand extends Command
         $this->call('key:generate');
         $this->call('migrate:fresh', ['--seed' => true]);
         User::factory()->count(50)->create();
-        Task::factory()->count(50)->create();
     }
 }
