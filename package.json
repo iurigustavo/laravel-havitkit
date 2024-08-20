@@ -20,5 +20,8 @@
     "dependencies": {
         "flatpickr": "^4.6.13",
         "tom-select": "^2.3.1"
+    },
+    "optionalDependencies": {
+        "@rollup/rollup-linux-x64-gnu": "4.18.0"
     }
 }
