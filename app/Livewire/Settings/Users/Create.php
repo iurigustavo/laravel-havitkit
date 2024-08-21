@@ -27,11 +27,10 @@ class Create extends Component
 
     public function save(CreateUserAction $action): void
     {
-        $this->authorize('create', new User);
+        $this->authorize('create', User::class);
+
         $this->form->validate($this->form->rules());
-
         $action->handle($this->form);
-
         $this->success(__('form.created'), redirectTo: route('management.users.index'));
     }
 

@@ -31,15 +31,15 @@ class VerticalMenu extends Component
                         @endif
                         @if(!empty($menu['children']))
                             <x-menu-sub :title="$menu['label']" :icon="!empty($menu['icon']) ? \Illuminate\Support\Str::replaceFirst('-','.', $menu['icon']) : null"
-                                        :enabled="isset($menu['permissions']) ? auth()->user()->can($menu['permissions']) : true">
+                                        :enabled="!empty($menu['permissions']) ? auth()->user()->hasAnyPermission($menu['permissions']) : true">
                                 @foreach($menu['children'] as $sub)
                                     <x-menu-item :title="$sub['label']" :link="$sub['url']" :icon="!empty($sub['icon']) ? \Illuminate\Support\Str::replaceFirst('-','.', $sub['icon']) : null"
-                                                 :enabled="isset($sub['permissions']) ? auth()->user()->can($sub['permissions']) : true"/>
+                                                 :enabled="!empty($sub['permissions']) ? auth()->user()->hasAnyPermission($sub['permissions']) : true"/>
                                 @endforeach
                             </x-menu-sub>
                         @else
                             <x-menu-item :title="$menu['label']" :icon="!empty($menu['icon']) ? \Illuminate\Support\Str::replaceFirst('-','.', $menu['icon']) : null" :link="$menu['url']"
-                                         :enabled="isset($menu['permissions']) ? auth()->user()->can($menu['permissions']) : true"/>
+                                         :enabled="!empty($menu['permissions']) ? auth()->user()->hasAnyPermission($menu['permissions']) : true"/>
                         @endif
                     @endforeach
                     <hr class="my-3 dark:border-slate-50/[0.06]"/>

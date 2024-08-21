@@ -28,7 +28,7 @@ class Create extends Component
 
     public function save(CreateNewPermissionAction $action): void
     {
-        $this->authorize('create', new Permission);
+        $this->authorize('create', Permission::class);
 
         $this->form->validate();
 

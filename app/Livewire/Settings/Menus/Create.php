@@ -28,7 +28,7 @@ class Create extends Component
 
     public function save(CreateNewMenuAction $action)
     {
-        $this->authorize('create', $this->menu);
+        $this->authorize('create', Menu::class);
 
         $this->form->validate();
         $action->run($this->form);

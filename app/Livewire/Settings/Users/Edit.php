@@ -34,6 +34,7 @@ class Edit extends Component
     public function save(UpdateUserAction $action): void
     {
         $this->authorize('update', $this->user);
+
         $this->form->validateUpdate();
         try {
             $action->handle($this->user, $this->form);

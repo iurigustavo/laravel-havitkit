@@ -19,6 +19,7 @@ class Index extends Component
     use ClearsProperties;
     use ResetsPaginationWhenPropsChanges;
     use WithPagination;
+
     #[Url]
     public array $sortBy = ['column' => 'id', 'direction' => 'desc'];
 
@@ -50,12 +51,14 @@ class Index extends Component
 
     public function render()
     {
+        auth()->user()->hasPermissionTo('management');
+
         return view('livewire.settings.activity-log.index', [
-            'headers'    => $this->headers(),
+            'headers' => $this->headers(),
             'activities' => $this->activities(),
-            'users'      => $this->users(),
-            'subjects'   => $this->subjects(),
-            'events'     => $this->events(),
+            'users' => $this->users(),
+            'subjects' => $this->subjects(),
+            'events' => $this->events(),
             'filterCount' => $this->filterCount(),
         ]);
     }
@@ -76,10 +79,10 @@ class Index extends Component
     {
         return Activity::query()
             ->with(['causer'])
-            ->when($this->subject_type, fn(Builder $q) => $q->where('subject_type', $this->subject_type))
-            ->when($this->subject_id, fn(Builder $q) => $q->where('subject_id', $this->subject_id))
-            ->when($this->event, fn(Builder $q) => $q->where('event', $this->event))
-            ->when($this->causer_id, fn(Builder $q) => $q->whereIn('causer_id', $this->causer_id))
+            ->when($this->subject_type, fn (Builder $q) => $q->where('subject_type', $this->subject_type))
+            ->when($this->subject_id, fn (Builder $q) => $q->where('subject_id', $this->subject_id))
+            ->when($this->event, fn (Builder $q) => $q->where('event', $this->event))
+            ->when($this->causer_id, fn (Builder $q) => $q->whereIn('causer_id', $this->causer_id))
             ->orderBy(...array_values($this->sortBy))
             ->paginate($this->perPage);
     }

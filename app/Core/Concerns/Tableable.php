@@ -11,17 +11,11 @@ use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
 abstract class Tableable extends PowerGridComponent
 {
-    use WithExport;
     use Toast;
-
-    public bool $authorize = false;
+    use WithExport;
 
     public function setUp(): array
     {
-        if ($this->authorize) {
-            $this->authorize('viewAny', $this->getModel());
-        }
-
         return [
             Exportable::make('export')->striped()->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
             Header::make()->showSearchInput()->showToggleColumns(),
@@ -35,6 +29,4 @@ abstract class Tableable extends PowerGridComponent
     {
         return $this->powerGridQueryString();
     }
-
-
 }

@@ -81,6 +81,7 @@ class Edit extends Component
     public function save(UpdateRoleAction $action): void
     {
         $this->authorize('update', $this->role);
+
         $this->form->validate();
         try {
             $action->handle($this->role, $this->form);

@@ -22,6 +22,8 @@ class Index extends Component
 
     public function render()
     {
+        $this->authorize('viewAny', Role::class);
+
         return view('livewire.settings.roles.index')->with(
             [
                 'roles' => $this->roles(),

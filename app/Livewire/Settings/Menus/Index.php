@@ -35,6 +35,8 @@ class Index extends Component
 
     public function render()
     {
+        $this->authorize('viewAny', Menu::class);
+
         return view('livewire.settings.menus.index', ['headers' => $this->headers(), 'menus' => $this->menus()]);
     }
 

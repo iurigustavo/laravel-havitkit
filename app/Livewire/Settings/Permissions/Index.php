@@ -32,6 +32,8 @@ class Index extends Component
 
     public function render()
     {
+        $this->authorize('viewAny', Permission::class);
+
         return view('livewire.settings.permissions.index')->with(
             [
                 'permissions' => $this->permissions(),

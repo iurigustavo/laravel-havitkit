@@ -21,8 +21,6 @@ use PowerComponents\LivewirePowerGrid\PowerGridFields;
 #[Title('List Users')]
 final class UserTable extends Tableable
 {
-    public bool $authorize = true;
-
     public function boot(): void
     {
         config(['livewire-powergrid.filter' => 'drawer']);

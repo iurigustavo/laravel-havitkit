@@ -28,7 +28,7 @@ class PermissionsSeeder extends Seeder
                 'guard_name' => 'web',
             ]);
 
-            $admin->givePermissionTo($value);
+            $admin->givePermissionTo($value['name']);
         }
     }
 

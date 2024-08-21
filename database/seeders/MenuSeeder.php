@@ -52,8 +52,8 @@ class MenuSeeder extends Seeder
                         'roles' => [
                         ],
                         'permissions' => [
-                            0 => 1,
-                            1 => 24,
+                            0 => 'management',
+                            1 => 'list user',
                         ],
                         'children' => [
                         ],
@@ -66,8 +66,8 @@ class MenuSeeder extends Seeder
                         'roles' => [
                         ],
                         'permissions' => [
-                            0 => 1,
-                            1 => 10,
+                            0 => 'management',
+                            1 => 'list role',
                         ],
                         'children' => [
                         ],
@@ -78,8 +78,8 @@ class MenuSeeder extends Seeder
                         'type' => 'internal',
                         'url' => '/management/permissions',
                         'permissions' => [
-                            0 => 3,
-                            1 => 1,
+                            0 => 'management',
+                            1 => 'list permission',
                         ],
                         'children' => [
                         ],
@@ -90,8 +90,8 @@ class MenuSeeder extends Seeder
                         'type' => 'internal',
                         'url' => '/management/menus',
                         'permissions' => [
-                            0 => 1,
-                            1 => 48,
+                            0 => 'management',
+                            1 => 'list menu',
                         ],
                         'children' => [
                         ],
@@ -102,7 +102,7 @@ class MenuSeeder extends Seeder
                         'type' => 'internal',
                         'url' => '/management/activity-log',
                         'permissions' => [
-                            0 => 1,
+                            0 => 'management',
                         ],
                         'children' => [
                         ],
