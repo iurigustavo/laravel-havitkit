@@ -81,6 +81,7 @@
                             label="Permissions"
                             wire:model="itemForm.permissions"
                             :options="$permissionsList"
+                            option-value="name"
                             option-label="description"
                             searchable
                         />
