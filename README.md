@@ -2,6 +2,8 @@
 
 Havit App is a skeleton application for the Laravel framework, incorporating a variety of packages and tools to offer a comprehensive development experience.
 
+## Demo
+- https://demo.havit.com.br/ admin@admin.com - 123456
 ## Description
 
 - **Framework:** Laravel 11
