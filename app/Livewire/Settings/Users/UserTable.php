@@ -31,12 +31,12 @@ final class UserTable extends Tableable
     public function fields(): PowerGridFields
     {
         return PowerGrid::fields()
-                        ->add('id')
-                        ->add('avatar', fn($user) => Blade::renderComponent((new Avatar($user->avatar_url))->withAttributes(['class' => '!w-10'])))
-                        ->add('name')
-                        ->add('email')
-                        ->add('roles', fn($user) => $user->roles->map(fn($role) => Blade::renderComponent((new Badge($role->description))->withAttributes(['class' => 'badge-primary'])))->implode(' '))
-                        ->add('is_active', fn($user): string => $user->active ? __('Yes') : __('No'));
+            ->add('id')
+            ->add('avatar', fn ($user) => Blade::renderComponent((new Avatar($user->avatar_url))->withAttributes(['class' => '!w-10'])))
+            ->add('name')
+            ->add('email')
+            ->add('roles', fn ($user) => $user->roles->map(fn ($role) => Blade::renderComponent((new Badge($role->name))->withAttributes(['class' => 'badge-primary'])))->implode(' '))
+            ->add('is_active', fn ($user): string => $user->active ? __('Yes') : __('No'));
     }
 
     public function columns(): array
@@ -58,14 +58,14 @@ final class UserTable extends Tableable
             Filter::number('id'),
             Filter::inputText('name')->operators(['contains']),
             Filter::boolean('is_active', 'active')
-                  ->label('Yes', 'No'),
+                ->label('Yes', 'No'),
             Filter::multiSelect('roles')
-                  ->dataSource(Role::all())
-                  ->optionValue('id')
-                  ->optionLabel('description')
-                  ->builder(fn(Builder $query, array $value) => $query->whereHas('roles', function (Builder $query) use ($value): void {
-                      $query->whereIn('role_id', $value);
-                  })),
+                ->dataSource(Role::all())
+                ->optionValue('id')
+                ->optionLabel('description')
+                ->builder(fn (Builder $query, array $value) => $query->whereHas('roles', function (Builder $query) use ($value): void {
+                    $query->whereIn('role_id', $value);
+                })),
         ];
     }
 
@@ -86,6 +86,8 @@ final class UserTable extends Tableable
 
     public function delete(User $user, DeleteUserAction $action): void
     {
+        $this->authorize('delete', $user);
+
         $action->handle($user);
         $this->success(__('form.deleted'));
     }
@@ -94,7 +96,7 @@ final class UserTable extends Tableable
     {
         return [
             Button::make('show')->bladeComponent('button.view', ['link' => route('management.users.show', $row)]),
-            Button::add('delete')->id()->render(fn($row) => Blade::render(
+            Button::add('delete')->id()->render(fn ($row) => Blade::render(
                 <<<HTML
 <x-button.delete wire:click="delete('$row->id')" />
 HTML
@@ -102,10 +104,10 @@ HTML
             Button::add('impersonate')->bladeComponent(
                 'button',
                 [
-                    'icon'    => 'o-user',
-                    'class'   => 'btn btn-sm btn-circle bg-purple-100 hover:bg-purple-300 text-purple-600 hover:text-purple-100',
+                    'icon' => 'o-user',
+                    'class' => 'btn btn-sm btn-circle bg-purple-100 hover:bg-purple-300 text-purple-600 hover:text-purple-100',
                     'tooltip' => 'Impersonate',
-                    'link'    => route('impersonate', $row),
+                    'link' => route('impersonate', $row),
                 ]
             )->can(allowed: $row->canBeImpersonated()),
         ];
@@ -114,7 +116,7 @@ HTML
     public function actionRules(): array
     {
         return [
-            Rule::rows()->when(fn($user): bool => $user->active === false)->setAttribute('class', '!text-red-500'),
+            Rule::rows()->when(fn ($user): bool => $user->active === false)->setAttribute('class', '!text-red-500'),
         ];
     }
 

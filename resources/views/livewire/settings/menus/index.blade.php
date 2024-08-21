@@ -21,6 +21,13 @@
             with-pagination
             per-page="perPage"
             show-empty-text
-        ></x-table>
+        >
+            @scope('actions', $menu)
+                <div class="flex items-center space-x-2">
+                    <x-button.view link="{{ route('management.menus.show', $menu->id) }}" />
+                    <x-button.delete wire:click="delete({{ $menu->id }})" />
+                </div>
+            @endscope
+        </x-table>
     </x-card>
 </div>

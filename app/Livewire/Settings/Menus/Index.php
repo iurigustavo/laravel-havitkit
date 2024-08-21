@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Settings\Menus;
 
+use App\Actions\Menu\DeleteMenuAction;
 use App\Models\Menu;
 use App\Traits\ClearsProperties;
 use App\Traits\ResetsPaginationWhenPropsChanges;
@@ -11,11 +12,13 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Mary\Traits\Toast;
 
 class Index extends Component
 {
     use ClearsProperties;
     use ResetsPaginationWhenPropsChanges;
+    use Toast;
     use WithPagination;
 
     #[Url]
@@ -53,13 +56,22 @@ class Index extends Component
     public function menus(): LengthAwarePaginator
     {
         return Menu::query()
-                   ->when($this->search, fn(Builder $q) => $q->whereAny(['name', 'handle'], 'like', '%'.$this->search.'%'))
-                   ->orderBy(...array_values($this->sortBy))
-                   ->paginate($this->perPage);
+            ->when($this->search, fn (Builder $q) => $q->whereAny(['name', 'handle'], 'like', '%'.$this->search.'%'))
+            ->orderBy(...array_values($this->sortBy))
+            ->paginate($this->perPage);
     }
 
     public function show(Menu $menu): void
     {
         $this->menu = $menu;
+    }
+
+    public function delete(Menu $menu): void
+    {
+        $this->authorize('delete', $menu);
+
+        DeleteMenuAction::run($menu);
+        $this->success(__('form.deleted'));
+        $this->reset();
     }
 }

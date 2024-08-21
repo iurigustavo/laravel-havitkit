@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 
 class RolesSeeder extends Seeder
@@ -19,8 +18,8 @@ class RolesSeeder extends Seeder
 
         foreach ($data as $value) {
             Role::create([
-                'name'        => $value,
-                'description' => Str::title($value),
+                'name' => $value['name'],
+                'description' => $value['description'],
             ]);
         }
     }
@@ -28,8 +27,8 @@ class RolesSeeder extends Seeder
     public function data(): array
     {
         return [
-            'admin',
-            'editor',
+            ['name' => 'admin',  'description' => 'Oversees system settings and user access, ensuring system stability.'],
+            ['name' => 'editor',  'description' => 'Has viewing access to data but lacks editing privileges.'],
         ];
     }
 }

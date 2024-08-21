@@ -71,6 +71,8 @@ class Index extends Component
 
     public function delete(Permission $permission): void
     {
+        $this->authorize('delete', $permission);
+
         DeletePermissionAction::run($permission);
         $this->success(__('form.deleted'));
         $this->reset();

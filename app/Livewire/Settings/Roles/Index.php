@@ -32,10 +32,10 @@ class Index extends Component
 
     public function roles(): LengthAwarePaginator
     {
-        return Role::query()->withCount(['permissions'])
+        return Role::query()->withCount(['permissions', 'users'])
             ->when($this->name, fn (Builder $q) => $q->where('name', 'like', sprintf('%%%s%%', $this->name)))
             ->orderBy(...array_values($this->sortBy))
-            ->paginate(10);
+            ->paginate(6);
     }
 
     public function headers(): array
@@ -51,6 +51,8 @@ class Index extends Component
 
     public function delete(Role $role, DeleteRoleAction $action): void
     {
+        $this->authorize('delete', $role);
+
         $action->handle($role);
         $this->success(__('form.deleted'));
     }
