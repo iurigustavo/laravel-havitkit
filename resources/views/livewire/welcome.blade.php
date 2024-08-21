@@ -28,4 +28,6 @@
         </x-slot:actions>
     </x-drawer>
 
+    <livewire:editor/>
+    <x-button label="open modal" wire:click="$dispatchTo('editor', 'show-modal')" class="mb-6"/>
 </div>
