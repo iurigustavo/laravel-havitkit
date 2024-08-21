@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Settings\Roles;
 
-use App\Actions\Roles\DeleteRoleAction;
+use App\Actions\Role\DeleteRoleAction;
 use App\Models\Role;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -24,7 +24,7 @@ class Index extends Component
     {
         return view('livewire.settings.roles.index')->with(
             [
-                'roles'   => $this->roles(),
+                'roles' => $this->roles(),
                 'headers' => $this->headers(),
             ]
         );
@@ -33,7 +33,7 @@ class Index extends Component
     public function roles(): LengthAwarePaginator
     {
         return Role::query()->withCount(['permissions'])
-            ->when($this->name, fn(Builder $q) => $q->where('name', 'like', sprintf('%%%s%%', $this->name)))
+            ->when($this->name, fn (Builder $q) => $q->where('name', 'like', sprintf('%%%s%%', $this->name)))
             ->orderBy(...array_values($this->sortBy))
             ->paginate(10);
     }

@@ -1,5 +1,6 @@
 <?php
 
+use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\Config\RectorConfig;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\Set\ValueObject\LevelSetList;
@@ -23,6 +24,7 @@ return static function (RectorConfig $rectorConfig) {
         __DIR__.'/**/vendor/*',
         __DIR__.'/bootstrap/cache/*',
         AddOverrideAttributeToOverriddenMethodsRector::class,
+        EncapsedStringsToSprintfRector::class,
     ]);
 
     $rectorConfig->sets([

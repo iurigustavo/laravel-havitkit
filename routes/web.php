@@ -43,10 +43,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/create', Create::class)->name('create');
             Route::get('/{role}', Edit::class)->name('show');
         });
+        Route::prefix('menus')->name('menus.')->group(function () {
+            Route::get('/', \App\Livewire\Settings\Menus\Index::class)->name('index');
+            Route::get('/create', \App\Livewire\Settings\Menus\Create::class)->name('create');
+            Route::get('/{menu}', \App\Livewire\Settings\Menus\Edit::class)->name('show');
+        });
         Route::prefix('permissions')->name('permissions.')->group(function () {
             Route::get('/', App\Livewire\Settings\Permissions\Index::class)->name('index');
-            Route::get('/create', App\Livewire\Settings\Permissions\Create::class)->name('create');
-            Route::get('/{permission}', App\Livewire\Settings\Permissions\Edit::class)->name('show');
         });
 
         Route::get('/activity-log', App\Livewire\Settings\ActivityLog\Index::class)->name('activity-log.index');

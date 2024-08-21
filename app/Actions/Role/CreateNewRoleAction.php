@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Roles;
+namespace App\Actions\Role;
 
 use App\Livewire\Forms\Settings\RoleForm;
 use Lorisleiva\Actions\Concerns\AsAction;

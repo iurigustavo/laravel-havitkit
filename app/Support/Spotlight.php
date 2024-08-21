@@ -2,10 +2,13 @@
 
 namespace App\Support;
 
+use App\Models\Menu;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class Spotlight
 {
@@ -19,29 +22,33 @@ class Spotlight
     public function actions(string $search = ''): Collection
     {
         $menus = [];
-        foreach (config('app.menu.main') as $menu) {
-
+        $handle = 'navigation';
+        $items = Cache::remember('menu-'.$handle, '1 day', static fn () => Menu::where('handle', $handle)->first()->items);
+        foreach ($items as $menu) {
             if (isset($menu['type']) && $menu['type'] === 'separator') {
                 continue;
             }
 
-            $icon = Blade::render(sprintf('<x-icon name=\'%s\' class=\'w-11 h-11 p-2 bg-primary/20 rounded-full\' />', $menu['icon']));
-
-            if (isset($menu['sub'])) {
-
-                foreach ($menu['sub'] as $sub) {
+            if (! empty($menu['children'])) {
+                foreach ($menu['children'] as $sub) {
+                    $icon = ! empty($sub['icon']) ? Blade::render(
+                        sprintf('<x-icon name=\'%s\' class=\'w-11 h-11 p-2 bg-primary/20 rounded-full\' />', Str::replaceFirst('-', '.', $sub['icon'])),
+                    ) : null;
                     $menus[] = [
-                        'name' => $sub['title'],
+                        'name' => $sub['label'],
                         'description' => $sub['description'],
-                        'link' => $sub['link'],
+                        'link' => $sub['url'],
                         'icon' => $icon,
                     ];
                 }
             } else {
+                $icon = ! empty($menu['icon']) !== null ? Blade::render(
+                    sprintf('<x-icon name=\'%s\' class=\'w-11 h-11 p-2 bg-primary/20 rounded-full\' />', Str::replaceFirst('-', '.', $menu['icon'])),
+                ) : null;
                 $menus[] = [
-                    'name' => $menu['title'],
+                    'name' => $menu['label'],
                     'description' => $menu['description'],
-                    'link' => $menu['link'],
+                    'link' => $menu['url'],
                     'icon' => $icon,
                 ];
             }

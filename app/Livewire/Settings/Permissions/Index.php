@@ -2,10 +2,12 @@
 
 namespace App\Livewire\Settings\Permissions;
 
+use App\Actions\Permission\DeletePermissionAction;
 use App\Models\Permission;
 use App\Traits\ResetsPaginationWhenPropsChanges;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -13,9 +15,10 @@ use Mary\Traits\Toast;
 
 class Index extends Component
 {
+    use ResetsPaginationWhenPropsChanges;
     use Toast;
     use WithPagination;
-    use ResetsPaginationWhenPropsChanges;
+
     #[Url]
     public string $name = '';
 
@@ -25,12 +28,14 @@ class Index extends Component
     #[Url]
     public int $perPage = 20;
 
+    public ?Permission $permission = null;
+
     public function render()
     {
         return view('livewire.settings.permissions.index')->with(
             [
                 'permissions' => $this->permissions(),
-                'headers'     => $this->headers(),
+                'headers' => $this->headers(),
             ]
         );
     }
@@ -38,9 +43,14 @@ class Index extends Component
     public function permissions(): LengthAwarePaginator
     {
         return Permission::query()
-            ->when($this->name, fn(Builder $q) => $q->where('name', 'like', sprintf('%%%s%%', $this->name)))
+            ->when($this->name, fn (Builder $q) => $q->where('name', 'like', '%'.$this->name.'%'))
             ->orderBy(...array_values($this->sortBy))
             ->paginate($this->perPage);
+    }
+
+    public function edit(Permission $permission): void
+    {
+        $this->permission = $permission;
     }
 
     public function headers(): array
@@ -52,9 +62,17 @@ class Index extends Component
         ];
     }
 
+    #[On('permission-saved')]
+    #[On('permission-cancel')]
+    public function clear(): void
+    {
+        $this->reset();
+    }
+
     public function delete(Permission $permission): void
     {
-        $permission->delete();
+        DeletePermissionAction::run($permission);
         $this->success(__('form.deleted'));
+        $this->reset();
     }
 }

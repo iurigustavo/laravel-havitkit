@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Roles;
+namespace App\Actions\Role;
 
 use Lorisleiva\Actions\Concerns\AsAction;
 use Spatie\Permission\Models\Role;

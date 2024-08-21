@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Roles;
+namespace App\Actions\Role;
 
 use App\Livewire\Forms\Settings\RoleForm;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -12,7 +12,7 @@ class UpdateRoleAction
 
     public function handle(Role $role, RoleForm $data): Role
     {
-        $role->name        = $data->name;
+        $role->name = $data->name;
         $role->description = $data->description;
         $role->save();
         $role->syncPermissions($data->permissions);

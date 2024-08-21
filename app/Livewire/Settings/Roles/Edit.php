@@ -2,33 +2,33 @@
 
 namespace App\Livewire\Settings\Roles;
 
-use Illuminate\Support\Str;
-use App\Actions\Roles\UpdateRoleAction;
+use App\Actions\Role\UpdateRoleAction;
 use App\Livewire\Forms\Settings\RoleForm;
-use Exception;
-use Livewire\Component;
-use Mary\Traits\Toast;
 use App\Models\Permission;
 use App\Models\Role;
+use Exception;
+use Illuminate\Support\Str;
+use Livewire\Component;
+use Mary\Traits\Toast;
 
 class Edit extends Component
 {
     use Toast;
 
-    public Role     $role;
+    public Role $role;
 
     public RoleForm $form;
 
-    public array    $allOptions = [];
+    public array $allOptions = [];
 
-    public array    $permissionsList;
+    public array $permissionsList;
 
     public function mount(): void
     {
         $this->form->fill($this->role);
         $this->form->permissions = $this->role->permissions()->pluck('name')->toArray();
-        $this->permissionsList   = $this->generateTable();
-        $this->allOptions        = Permission::query()->pluck('name')->toArray();
+        $this->permissionsList = $this->generateTable();
+        $this->allOptions = Permission::query()->pluck('name')->toArray();
     }
 
     private function generateTable(): array
@@ -53,19 +53,19 @@ class Edit extends Component
                 [$action, $model] = explode(' ', $permission->name);
 
                 $item = [
-                    'id'     => $permission->id,
-                    'name'   => $permission->name,
+                    'id' => $permission->id,
+                    'name' => $permission->name,
                     'action' => $action,
-                    'can'    => $this->role->hasPermissionTo($permission->name),
+                    'can' => $this->role->hasPermissionTo($permission->name),
                 ];
 
                 $table['permissions']['models'][$model][$action] = $item;
             } else {
                 $table['permissions']['others'][$permission->name] = [
-                    'id'     => $permission->id,
-                    'name'   => $permission->name,
+                    'id' => $permission->id,
+                    'name' => $permission->name,
                     'action' => $permission->name,
-                    'can'    => $this->role->hasPermissionTo($permission->name),
+                    'can' => $this->role->hasPermissionTo($permission->name),
                 ];
             }
         }

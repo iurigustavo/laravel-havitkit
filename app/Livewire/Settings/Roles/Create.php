@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Settings\Roles;
 
-use App\Actions\Roles\CreateNewRoleAction;
+use App\Actions\Role\CreateNewRoleAction;
 use App\Livewire\Forms\Settings\RoleForm;
 use App\Models\Permission;
 use App\Models\Role;
