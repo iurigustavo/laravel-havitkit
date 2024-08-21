@@ -12,7 +12,7 @@
     </x-header>
 
     {{-- TABLE --}}
-    <x-card>
+    <x-card class="!shadow-xl">
         <x-table
             :headers="$headers"
             :rows="$menus"

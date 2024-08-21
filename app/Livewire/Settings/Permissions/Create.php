@@ -5,6 +5,7 @@ namespace App\Livewire\Settings\Permissions;
 use App\Actions\Permission\CreateNewPermissionAction;
 use App\Livewire\Forms\Settings\PermissionForm;
 use Exception;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Mary\Traits\Toast;
 
@@ -17,6 +18,12 @@ class Create extends Component
     public bool $isCreate = true;
 
     public PermissionForm $form;
+
+    #[On('permission-cancel')]
+    public function clear(): void
+    {
+        $this->show = false;
+    }
 
     public function save(CreateNewPermissionAction $action): void
     {
