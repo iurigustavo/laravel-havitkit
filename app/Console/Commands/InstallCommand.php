@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Task;
 use App\Models\User;
 use Illuminate\Console\Command;
 
@@ -26,6 +25,7 @@ class InstallCommand extends Command
     {
         $this->call('key:generate');
         $this->call('migrate:fresh', ['--seed' => true]);
+        $this->call('generate:permissions');
         User::factory()->count(50)->create();
     }
 }

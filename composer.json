@@ -1,5 +1,5 @@
 {
-  "name": "laravel/laravel",
+  "name": "iurigustavo/laravel-havitkit",
   "type": "project",
   "description": "The skeleton application for the Laravel framework.",
   "keywords": [
@@ -23,7 +23,7 @@
   ],
   "license": "MIT",
   "require": {
-    "php": "^8.2",
+    "php": "^8.3",
     "blade-ui-kit/blade-heroicons": "^2.3",
     "lab404/laravel-impersonate": "^1.7",
     "laravel/framework": "^11.9",
