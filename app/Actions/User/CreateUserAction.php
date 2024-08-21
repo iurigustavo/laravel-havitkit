@@ -13,14 +13,14 @@ class CreateUserAction
 
     public function handle(UserForm $data): User
     {
-        $user           = new User();
-        $user->name     = $data->name;
-        $user->email    = $data->email;
+        $user = new User;
+        $user->name = $data->name;
+        $user->email = $data->email;
         $user->password = bcrypt($data->password);
-        $user->active   = $data->active;
+        $user->active = $data->active;
 
         if ($data->avatar_file instanceof TemporaryUploadedFile) {
-            $user->avatar = $data->avatar_file->storePublicly('users', 's3');
+            $user->avatar = $data->avatar_file->storePublicly('users');
         }
 
         $user->save();

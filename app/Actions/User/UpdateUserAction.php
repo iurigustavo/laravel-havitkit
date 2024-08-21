@@ -14,12 +14,12 @@ class UpdateUserAction
 
     public function handle(User $user, UserForm $data): User
     {
-        $user->name   = $data->name;
-        $user->email  = $data->email;
+        $user->name = $data->name;
+        $user->email = $data->email;
         $user->active = $data->active;
 
         if ($data->avatar_file instanceof TemporaryUploadedFile) {
-            $user->avatar = $data->avatar_file->storePublicly('users', 's3');
+            $user->avatar = $data->avatar_file->storePublicly('users');
         }
 
         if ($data->password !== null && $data->password !== '' && $data->password !== '0') {
