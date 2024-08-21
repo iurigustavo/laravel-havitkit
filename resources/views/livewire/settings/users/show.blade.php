@@ -24,13 +24,7 @@
                 wire:model="form.active"
                 :options="[['id' => 1, 'name' => 'Active'], ['id' => 0, 'name' => 'Disabled']]"
             />
-            <x-choices-offline
-                label="Roles"
-                wire:model="form.roles"
-                :options="$rolesList"
-                option-label="name"
-                single
-            />
+            <x-choices-offline label="Roles" wire:model="form.roles" :options="$rolesList" option-label="name" />
             <x-slot:actions>
                 <x-button.back link="{{ route('management.users.index') }}" />
                 <x-button.submit />
