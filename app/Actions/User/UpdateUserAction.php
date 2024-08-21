@@ -19,7 +19,7 @@ class UpdateUserAction
         $user->active = $data->active;
 
         if ($data->avatar_file instanceof TemporaryUploadedFile) {
-            $user->avatar = $data->avatar_file->storePublicly('users');
+            $user->avatar = $data->avatar_file->store('users', 'public');
         }
 
         if ($data->password !== null && $data->password !== '' && $data->password !== '0') {
