@@ -87,7 +87,7 @@
             <x-slot:sidebar
                 drawer="main-drawer"
                 collapsible
-                class="dark:border-r-coal-100 border-r border-r-gray-200 bg-base-100 lg:bg-inherit"
+                class="border-r border-r-gray-200 bg-base-100 dark:border-r-slate-50/[0.06] lg:bg-inherit"
             >
                 <x-vertical-menu />
             </x-slot>

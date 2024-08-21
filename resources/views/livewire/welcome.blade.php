@@ -22,10 +22,4 @@
             tooltip-right="Gosh!"
         />
     </div>
-
-    <div>
-        <div class="mockup-code">
-            <pre data-prefix="$"><code>php artisan app:install</code></pre>
-        </div>
-    </div>
 </div>

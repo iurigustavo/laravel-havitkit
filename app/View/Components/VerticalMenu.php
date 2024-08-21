@@ -26,7 +26,7 @@ class VerticalMenu extends Component
                 <x-menu activate-by-route>
                     @foreach($items as $menu)
                         @if(isset($menu['type']) && $menu['type'] === 'separator')
-                            <x-menu-separator/>
+                            <hr class="my-3 dark:border-slate-50/[0.06]"/>
                             @continue
                         @endif
                         @if(!empty($menu['children']))
@@ -42,7 +42,7 @@ class VerticalMenu extends Component
                                          :enabled="isset($menu['permissions']) ? auth()->user()->can($menu['permissions']) : true"/>
                         @endif
                     @endforeach
-                    <x-menu-separator/>
+                    <hr class="my-3 dark:border-slate-50/[0.06]"/>
                     <x-menu-item title="Search" @click.stop="$dispatch('mary-search-open')" icon="o-magnifying-glass" class="max-h-screen-2xl mh-auto" badge="Cmd + G"/>
                 </x-menu>
             </div>

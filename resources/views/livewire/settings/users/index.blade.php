@@ -1,11 +1,17 @@
 <div>
-    <x-header title="List Users" progress-indicator>
+    <x-header title="Users" progress-indicator separator>
         <x-slot:actions>
             <div>
-                <x-button class="btn-primary" label="Create" icon="o-plus" link="{{ route('management.users.create') }}" responsive/>
+                <x-button
+                    class="btn-primary"
+                    label="Create"
+                    icon="o-plus"
+                    link="{{ route('management.users.create') }}"
+                    responsive
+                />
             </div>
-        </x-slot:actions>
+        </x-slot>
     </x-header>
 
-    <livewire:settings.users.user-table/>
+    <livewire:settings.users.user-table />
 </div>
