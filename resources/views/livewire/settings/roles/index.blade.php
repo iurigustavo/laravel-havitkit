@@ -28,7 +28,7 @@
                         <div class="flex flex-col">
                             <a
                                 wire:navigate
-                                class="text-md hover:text-primary-active mb-px font-medium text-gray-900"
+                                class="text-md hover:text-primary-active mb-px font-medium text-gray-900 dark:text-inherit"
                                 href="{{ route('management.roles.show', $role->id) }}"
                             >
                                 {{ Str::title($role->name) }}
@@ -56,13 +56,13 @@
                         </div>
                     </div>
                 </div>
-                <p class="h-16 text-gray-700">{{ $role->description }}</p>
+                <p class="h-16 text-gray-700 dark:text-inherit">{{ $role->description }}</p>
                 <div class="flex justify-between text-sm">
-                    <span class="text-2sm text-gray-800">
+                    <span class="text-2sm text-gray-800 dark:text-inherit">
                         {{ $role->users_count }}
                         {{ Str::pluralStudly('Person', $role->users_count) }}
                     </span>
-                    <span class="text-2sm text-gray-800">
+                    <span class="text-2sm text-gray-800 dark:text-inherit">
                         {{ $role->permissions_count }}
                         {{ Str::pluralStudly('Permission', $role->permissions_count) }}
                     </span>
