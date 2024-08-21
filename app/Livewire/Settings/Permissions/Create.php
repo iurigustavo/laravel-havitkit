@@ -4,6 +4,7 @@ namespace App\Livewire\Settings\Permissions;
 
 use App\Actions\Permission\CreateNewPermissionAction;
 use App\Livewire\Forms\Settings\PermissionForm;
+use App\Models\Permission;
 use Exception;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -27,6 +28,8 @@ class Create extends Component
 
     public function save(CreateNewPermissionAction $action): void
     {
+        $this->authorize('create', new Permission);
+
         $this->form->validate();
 
         try {

@@ -34,6 +34,8 @@ class Edit extends Component
 
     public function save(UpdateMenuAction $action)
     {
+        $this->authorize('update', $this->menu);
+
         $this->form->validate();
         $action->run($this->menu, $this->form);
 

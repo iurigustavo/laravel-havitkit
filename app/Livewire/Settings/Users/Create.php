@@ -4,17 +4,19 @@ namespace App\Livewire\Settings\Users;
 
 use App\Actions\User\CreateUserAction;
 use App\Livewire\Forms\Settings\UserForm;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Mary\Traits\Toast;
-use App\Models\Role;
 
 class Create extends Component
 {
     use Toast;
     use WithFileUploads;
-    public UserForm   $form;
+
+    public UserForm $form;
 
     public Collection $rolesList;
 
@@ -25,6 +27,7 @@ class Create extends Component
 
     public function save(CreateUserAction $action): void
     {
+        $this->authorize('create', new User);
         $this->form->validate($this->form->rules());
 
         $action->handle($this->form);

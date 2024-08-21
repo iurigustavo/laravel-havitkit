@@ -30,6 +30,7 @@ class Edit extends Component
 
     public function save(UpdatePermissionAction $action): void
     {
+        $this->authorize('update', $this->permission);
         $this->form->validate();
 
         try {

@@ -30,6 +30,8 @@ class Create extends Component
 
     public function save(CreateNewRoleAction $action): void
     {
+        $this->authorize('create', $this->role);
+
         $this->form->validate();
 
         $action->handle($this->form);
