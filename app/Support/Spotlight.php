@@ -63,7 +63,7 @@ class Spotlight
             'name' => $user->name,
             'description' => 'User',
             'link' => route('management.users.show', $user->id),
-            'avatar' => $user->avatar,
+            'avatar' => $user->avatar_url,
         ]);
     }
 }
